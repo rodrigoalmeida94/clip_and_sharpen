@@ -2,7 +2,7 @@
 
 # Setting up
 ## Docker
-Dockerfile by @perrygeo https://gist.github.com/perrygeo/1eea522b283baf91dbca497150155695.
+Dockerfile inspired by @perrygeo https://gist.github.com/perrygeo/1eea522b283baf91dbca497150155695.
 
 Build the image:
 ```
@@ -10,7 +10,7 @@ docker build --tag slimpy:latest .
 ```
 Open shell in image:
 ```
-docker run -it --rm slimpy:latest /bin/bash
+docker run -it --rm slimpy:latest -v /tmp/:/tmp/ /bin/bash
 ```
 Open notebook in image:
 ```
@@ -24,9 +24,8 @@ docker run -it --rm \
 ```
 
 # Running
-```
+```    
 docker run \
-    -e UP42_TASK_PARAMETERS="$(cat params.json)" \
-    -v /tmp/output:/tmp/output \
-    -t data-block
+    -v /tmp:/tmp \
+    -t slimpy:latest
 ```
