@@ -25,7 +25,7 @@ RUN dpkg-reconfigure locales && \
     locale-gen C.UTF-8 && \
     /usr/sbin/update-locale LANG=C.UTF-8
 
-ENV LC_ALL C.UTF-8\
+ENV LC_ALL C.UTF-8
 
 WORKDIR /block
 COPY . /block/
