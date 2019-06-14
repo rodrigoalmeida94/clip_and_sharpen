@@ -67,10 +67,8 @@ def run_high_pass(input_path, output_path='high_pass.tif'):
         logging.info('Applying sharpening to %s' % input_path)
         kwargs = cropped.meta.copy()
         with rasterio.open(output_path, 'w', **kwargs) as out:
-            out.write(high_pass_filter(cropped.read(1)), 1)
-            out.write(high_pass_filter(cropped.read(2)), 2)
-            out.write(high_pass_filter(cropped.read(3)), 3)
-            out.write(high_pass_filter(cropped.read(4)), 4)
+            for band in range(1, cropped.count+1):
+                out.write(high_pass_filter(cropped.read(band)), band)
     logging.info('Writting sharpened image to %s' % output_path)
     return output_path
 
