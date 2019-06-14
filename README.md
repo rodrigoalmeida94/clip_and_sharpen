@@ -24,6 +24,9 @@ docker run -it --rm \
 ```
 
 # Running
-```    
-docker run -v /Users/rodrigoalmeida/clip_and_sharpen/tmp:/block/tmp -t slimpy:latest
+```
+docker run \
+    -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
+    -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input
+    -t slimpy:latest
 ```
