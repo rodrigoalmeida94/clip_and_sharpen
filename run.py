@@ -45,15 +45,16 @@ def clip_input(input_path, output_path='cropped.tif'):
         logging.info('Writting clipped image to %s' % input_path)
         return output_path
 
-def high_pass_filter(data):
+def high_pass_filter(data, alpha=15):
     """
     Apply high pass gaussian filter to np array
     :param np.array data: 2d array to apply filter
+    :param int alpha: alpha value to highlight edges
     """
-
     blurred = ndimage.gaussian_filter(data, 3)
-    filter_blurred = ndimage.gaussian_filter(data, 1)
-    sharpened = data + (data - filter_blurred)
+    filter_blurred = ndimage.gaussian_filter(blurred, 1)
+    noise = (blurred - filter_blurred)
+    sharpened = data - alpha*noise
     return sharpened
 
 def run_high_pass(input_path, output_path='high_pass.tif'):
