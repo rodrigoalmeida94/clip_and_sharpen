@@ -36,7 +36,6 @@ def clip_input(input_path, output_path='cropped.tif'):
             'height': window.height,
             'width': window.width,
             'transform': img.window_transform(window)})
-        print(kwargs)
         with rasterio.open(output_path, 'w', **kwargs) as out:
                 out.write(img.read(window=window,
                                    out_shape=(img.count, window.height, window.width)))
