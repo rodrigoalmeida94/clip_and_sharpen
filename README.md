@@ -36,5 +36,5 @@ Replace `/Users/rodrigoalmeida/clip_and_sharpen/tmp/output`and `/Users/rodrigoal
 docker run \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input \
-    -t slimpy:latest python test.py
+    -t slimpy:latest python test.py -v
 ```
