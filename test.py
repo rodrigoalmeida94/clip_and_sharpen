@@ -17,10 +17,7 @@ class TestClipSharpen(unittest.TestCase):
     def test_high_pass_filter(self):
         test_array = np.zeros((3,3))
         self.assertEqual(high_pass_filter(test_array).size, 9)
-<<<<<<< HEAD
         self.assertEqual(high_pass_filter(test_array), test_array)
-=======
->>>>>>> 26f8a25c43cbaea874ad0a9d3f4383c2c66cc80a
 
 if __name__ == '__main__':
     unittest.main()
