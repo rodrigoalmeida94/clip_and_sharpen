@@ -28,6 +28,6 @@ RUN dpkg-reconfigure locales && \
 ENV LC_ALL C.UTF-8
 
 WORKDIR /block
-COPY . /block/
+COPY run.py /block/
 
 CMD ["python", "/block/run.py"]
