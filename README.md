@@ -10,7 +10,7 @@ docker build --tag slimpy:latest .
 ```
 Open shell in image:
 ```
-docker run -it --rm slimpy:latest -v /tmp/:/tmp/ /bin/bash
+docker run -it --rm slimpy:latest -v /Users/rodrigoalmeida/clip_and_sharpen/tmp:/block/tmp /bin/bash
 ```
 Open notebook in image:
 ```
@@ -25,7 +25,5 @@ docker run -it --rm \
 
 # Running
 ```    
-docker run \
-    -v /tmp:/tmp \
-    -t slimpy:latest
+docker run -v /Users/rodrigoalmeida/clip_and_sharpen/tmp:/block/tmp -t slimpy:latest
 ```
