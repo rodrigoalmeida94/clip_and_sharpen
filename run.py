@@ -9,14 +9,11 @@ from rasterio.windows import Window
 import numpy as np
 from scipy import ndimage
 
-
-IMGFILE = "data/FCGC600031063/IMG_PHR1A_MS_002/IMG_PHR1A_MS_201202250025599_ORT_PRG_FC_5852-002_R1C1.JP2"
-
-
 def load_input():
     """
     Load the input image from the filesystem
     """
+
     input_file = os.listdir('/tmp/input')
     if len(input_file) > 1:
         raise(ValueError, "More than 1 input file.")
@@ -25,7 +22,8 @@ def load_input():
 def clip_input(input_path, output_path='cropped.tif'):
     """
     Clip a chip of image
-    :img: rasterio dataset
+    :param str input_path: Path of input full image
+    :param str output_path: Path of output clipped image
     """
 
     with rasterio.open(input_path, 'r') as img:
@@ -42,12 +40,23 @@ def clip_input(input_path, output_path='cropped.tif'):
         return output_path
 
 def high_pass_filter(data):
+    """
+    Apply high pass gaussian filter to np array
+    :param np.array data: 2d array to apply filter
+    """
+
     blurred = ndimage.gaussian_filter(data, 3)
     filter_blurred = ndimage.gaussian_filter(data, 1)
     sharpened = data + (data - filter_blurred)
     return sharpened
 
 def run_high_pass(input_path, output_path='high_pass.tif'):
+    """
+    Run sharpen filter to image
+    :param str input_path: Path of input image
+    :param str output_path: Path of output sharpened image
+    """
+
     with rasterio.open(input_path) as cropped:
         kwargs = cropped.meta.copy()
         with rasterio.open(output_path, 'w', **kwargs) as out:
@@ -58,19 +67,20 @@ def run_high_pass(input_path, output_path='high_pass.tif'):
     return output_path
 
 def run(data):
+    """
+    Run sharpen in image
+    :param str data: Path of input image
+    """
     output_path = run_high_pass(clip_input(data))
     return output_path
 
-
 def write_output(result_path, output_file_name):
     """
-    Write the result data to the /tmp/output directory.
-
-    If you are storing image data, you would need to then copy that data into this directory as well.
+    Write the result to tmp/output with a given name
+    :param str result_path: Path of input image
+    :param str output_file_name: File name to write to output folder
     """
     shutil.copy(result_path, "/tmp/output/"+output_file_name)
-
-
 
 if __name__ == "__main__":
     data = load_input()
