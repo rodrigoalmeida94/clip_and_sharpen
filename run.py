@@ -95,6 +95,6 @@ if __name__ == "__main__":
     start = time.time()
     data = load_input()
     result = run(data)
-    write_output(result, "sharpened_"+os.path.splitext(os.path.basename(data))[0])
+    write_output(result, "sharpened_"+os.path.splitext(os.path.basename(data))[0]+".tif")
     end = time.time()
     logging.info("Clip and Sharpen ran in %s s" % round(end - start, 2))
