@@ -18,8 +18,11 @@ docker run -it --rm \
 		--rm \
 		--interactive \
 		--tty \
-		--volume $(shell pwd)/notebooks/:/notebooks \
-		slimpy:latest  /bin/bash -c "cd /notebooks && jupyter notebook --ip=0.0.0.0 --allow-root"
+		--volume /Users/rodrigoalmeida/clip_and_sharpen/notebooks/:/notebooks \
+		-v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
+    -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input \
+		slimpy:latest  /bin/bash \
+		-c "cd /notebooks && jupyter notebook --ip=0.0.0.0 --allow-root"
 ```
 
 # Running
