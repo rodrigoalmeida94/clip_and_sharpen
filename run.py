@@ -81,19 +81,20 @@ def run(data):
     output_path = run_high_pass(clip_input(data))
     return output_path
 
-def write_output(result_path, output_file_name):
+def write_output(result_path, input_file_name):
     """
     Write the result to tmp/output with a given name
     :param str result_path: Path of input image
-    :param str output_file_name: File name to write to output folder
+    :param str input_file_name: File name of original image
     """
+    output_file_name = "sharpened_"+os.path.splitext(os.path.basename(input_file_name))[0]+".tif"
     logging.info('Copying sharpened image to %s' % "/tmp/output/"+output_file_name)
     shutil.copy(result_path, "/tmp/output/"+output_file_name)
 
 if __name__ == "__main__":
     start = time.time()
-    data = load_input()
-    result = run(data)
-    write_output(result, "sharpened_"+os.path.splitext(os.path.basename(data))[0]+".tif")
+    input_file = load_input()
+    result = run(input_file)
+    write_output(result, input_file)
     end = time.time()
     logging.info("Clip and Sharpen ran in %s s" % round(end - start, 2))
