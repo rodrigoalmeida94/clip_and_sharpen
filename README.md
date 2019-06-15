@@ -1,6 +1,6 @@
 # clip_and_sharpen
 
-# Setting up
+## Setting up
 Dockerfile inspired by @perrygeo https://gist.github.com/perrygeo/1eea522b283baf91dbca497150155695.
 
 Build the image:
@@ -25,7 +25,7 @@ docker run -it --rm \
 		-c "cd /notebooks && jupyter notebook --ip=0.0.0.0 --allow-root"
 ```
 
-# Running
+## Running
 Replace `/Users/rodrigoalmeida/clip_and_sharpen/tmp/output`and `/Users/rodrigoalmeida/clip_and_sharpen/tmp/input` with location of input and output folder.
 *Place input image (`JP2`, `GeoTiff` or other) in `ìnput` folder, this should be the only file in folder.*
 ```
@@ -35,7 +35,7 @@ docker run \
     -t slimpy:latest
 ```
 
-## Run with additional parameters
+### Run with additional parameters
 ```
 docker run \
 		-v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
@@ -63,10 +63,10 @@ docker run \
 ```
 Where `--filter-type`is either `gaussian`or `3x3`.
 
-# Visualization
+## Visualization
 Check out this [notebook](notebooks/visualization.ipynb).
 
-# Testing
+## Testing
 ```
 docker run \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
