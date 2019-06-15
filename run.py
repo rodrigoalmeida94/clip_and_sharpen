@@ -13,14 +13,16 @@ import logging
 import argparse
 logging.basicConfig(level=logging.INFO)
 
-parser = argparse.ArgumentParser(description='Clip and Sharpen.')
-parser.add_argument('--clip-coords', default=[1000, 1000, 250, 250], type=int, nargs=4,
-                    help='Image coordinates to clip with (col_off, row_off, width, height)')
-parser.add_argument('--filter-type', default='gaussian', type=str,
-                    choices=['gaussian', '3x3'], help='Type of high pass filter to apply.')
-parser.add_argument('--alpha', default=15, type=int,
-                    help='Parameter for edge salience in sharpen method. Set to 0 to return source imagery.')
-args = parser.parse_args()
+
+def argparser():
+    parser = argparse.ArgumentParser(description='Clip and Sharpen.')
+    parser.add_argument('--clip-coords', default=[1000, 1000, 250, 250], type=int, nargs=4,
+                        help='Image coordinates to clip with (col_off, row_off, width, height)')
+    parser.add_argument('--filter-type', default='gaussian', type=str,
+                        choices=['gaussian', '3x3'], help='Type of high pass filter to apply.')
+    parser.add_argument('--alpha', default=15, type=int,
+                        help='Parameter for edge salience in sharpen method. Set to 0 to return source imagery.')
+    return parser.parse_args()
 
 
 def load_input():
@@ -136,6 +138,7 @@ def write_output(result_path, input_file_name):
 
 if __name__ == "__main__":
     start = time.time()
+    args = argparser()
     input_file = load_input()
     result = run(input_file)
     write_output(result, input_file)
