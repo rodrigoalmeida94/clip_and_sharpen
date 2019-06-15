@@ -42,7 +42,7 @@ def clip_input(input_path, output_path='cropped.tif'):
         with rasterio.open(output_path, 'w', **kwargs) as out:
                 out.write(img.read(window=window,
                                    out_shape=(img.count, window.height, window.width)))
-        logging.info('Writting clipped image to %s' % input_path)
+        logging.info('Writting clipped image to %s, with %d by %d' % (input_path, window.height, window.width))
         return output_path
 
 def high_pass_filter(data, alpha=15):
@@ -51,6 +51,7 @@ def high_pass_filter(data, alpha=15):
     :param np.array data: 2d array to apply filter
     :param int alpha: alpha value to highlight edges
     """
+
     blurred = ndimage.gaussian_filter(data, 3)
     filter_blurred = ndimage.gaussian_filter(blurred, 1)
     noise = (blurred - filter_blurred)
