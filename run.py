@@ -10,7 +10,13 @@ from rasterio.windows import Window
 import numpy as np
 from scipy import ndimage
 import logging
+import argparse
 logging.basicConfig(level=logging.INFO)
+
+parser = argparse.ArgumentParser(description='Clip and Sharpen.')
+parser.add_argument('--clip-coords', default=[1000, 1000, 250, 250], type=int, nargs=4,
+                    help='Image coordinates to clip with (col_off, row_off, width, height)')
+args = parser.parse_args()
 
 def load_input():
     """
@@ -83,7 +89,8 @@ def run(data):
     Run sharpen in image
     :param str data: Path of input image
     """
-    output_path = run_high_pass(clip_input(data))
+
+    output_path = run_high_pass(clip_input(data, args.clip_coords))
     return output_path
 
 def write_output(result_path, input_file_name):
