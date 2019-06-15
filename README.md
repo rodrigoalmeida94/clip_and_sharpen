@@ -32,7 +32,18 @@ docker run \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input \
     -t slimpy:latest
 ```
-Replace `/Users/rodrigoalmeida/clip_and_sharpen/tmp/output`and `/Users/rodrigoalmeida/clip_and_sharpen/tmp/input` with location of input and output folder. Place input image (`JP2`, `GeoTiff` or other) in `ìnput` folder.
+Replace `/Users/rodrigoalmeida/clip_and_sharpen/tmp/output`and `/Users/rodrigoalmeida/clip_and_sharpen/tmp/input` with location of input and output folder. Place input image (`JP2`, `GeoTiff` or other) in `ìnput` folder - should be the only file in folder.
+
+## Run with additional parameters
+```
+docker run -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input -t slimpy:latest python run.py --clip-coords 2000 2000 250 250
+```
+Where `--clip-coords`is `(column_offset, row_offset, width, height)`.
+
+```
+docker run -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input -t slimpy:latest python run.py --clip-coords 2000 2000 250 250 --alpha 10
+```
+Where `--alpha`is parameter for edge salience in sharpen method.
 
 # Testing
 ```
