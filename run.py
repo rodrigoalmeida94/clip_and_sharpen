@@ -63,17 +63,24 @@ def clip_input(input_path, clip_coords=(1000, 1000, 250, 250), output_path='crop
         return output_path
 
 
-def high_pass_filter(data, alpha=15):
+def high_pass_filter(data, type='gaussian', alpha=15):
     """
-    Apply high pass gaussian filter to np array
+    Apply high pass filter to np array
     :param np.array data: 2d array to apply filter
-    :param int alpha: alpha value to highlight edges
+    :param str type: type of filter to apply gaussian or 3x3
+    :param int alpha: alpha value to highlight edges (gaussian)
     """
-
-    blurred = ndimage.gaussian_filter(data, 3)
-    filter_blurred = ndimage.gaussian_filter(blurred, 1)
-    noise = (blurred - filter_blurred)
-    sharpened = data - alpha * noise
+    if type == 'gaussian':
+        blurred = ndimage.gaussian_filter(data, 3)
+        filter_blurred = ndimage.gaussian_filter(blurred, 1)
+        noise = (blurred - filter_blurred)
+        sharpened = data - alpha * noise
+    elif type == '3x3':
+        kernel = np.array([[0, -1 / 4, 0],
+                           [-1 / 4,  2, -1 / 4],
+                           [0, -1 / 4, 0]])
+        highpass_3x3 = ndimage.convolve(data, kernel)
+        sharpened = highpass_3x3
     return sharpened
 
 
