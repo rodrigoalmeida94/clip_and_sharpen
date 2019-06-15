@@ -26,6 +26,7 @@ args = parser.parse_args()
 def load_input():
     """
     Load the input image from the filesystem
+    :returns str: Path of input image file
     """
 
     input_file = os.listdir('/tmp/input')
@@ -41,6 +42,7 @@ def clip_input(input_path, clip_coords=(1000, 1000, 250, 250), output_path='crop
     :param str input_path: Path of input full image
     :param tuple clip_coords: Img coordinates to clip with (col_off, row_off, width, height)
     :param str output_path: Path of output clipped image
+    :returns str: Path of output clipped image file
     """
 
     with rasterio.open(input_path, 'r') as img:
@@ -71,6 +73,7 @@ def high_pass_filter(data, type='gaussian', alpha=15):
     :param np.array data: 2d array to apply filter
     :param str type: type of filter to apply gaussian or 3x3
     :param int alpha: alpha value to highlight edges (gaussian)
+    :returns np.array: sharpened 2d array
     """
     if type == 'gaussian':
         blurred = ndimage.gaussian_filter(data, 3)
@@ -91,6 +94,7 @@ def run_high_pass(input_path, output_path='high_pass.tif'):
     Run sharpen filter to image
     :param str input_path: Path of input image
     :param str output_path: Path of output sharpened image
+    :returns str: Path of output sharpened image file
     """
 
     with rasterio.open(input_path) as cropped:
@@ -109,6 +113,7 @@ def run(data):
     """
     Run sharpen in image
     :param str data: Path of input image
+    :returns str: Path of output image file
     """
 
     output_path = run_high_pass(clip_input(data, args.clip_coords))
