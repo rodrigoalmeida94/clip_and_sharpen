@@ -42,7 +42,7 @@ def clip_input(input_path, output_path='cropped.tif'):
         with rasterio.open(output_path, 'w', **kwargs) as out:
                 out.write(img.read(window=window,
                                    out_shape=(img.count, window.height, window.width)))
-        logging.info('Writting clipped image to %s, with %d by %d' % (input_path, window.height, window.width))
+        logging.info('Writting clipped image to %s, with h %d by w %d' % (input_path, window.height, window.width))
         return output_path
 
 def high_pass_filter(data, alpha=15):
