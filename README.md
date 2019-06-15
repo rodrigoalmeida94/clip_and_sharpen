@@ -36,12 +36,20 @@ Replace `/Users/rodrigoalmeida/clip_and_sharpen/tmp/output`and `/Users/rodrigoal
 
 ## Run with additional parameters
 ```
-docker run -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input -t slimpy:latest python run.py --clip-coords 2000 2000 250 250
+docker run \
+		-v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
+		-v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input \
+		-t slimpy:latest \
+		python run.py --clip-coords 2000 2000 250 250
 ```
 Where `--clip-coords`is `(column_offset, row_offset, width, height)`.
 
 ```
-docker run -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input -t slimpy:latest python run.py --clip-coords 2000 2000 250 250 --alpha 10
+docker run \
+		-v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
+		-v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input \
+		-t slimpy:latest \
+		python run.py --clip-coords 2000 2000 250 250 --alpha 10
 ```
 Where `--alpha`is parameter for edge salience in sharpen method.
 
@@ -50,5 +58,6 @@ Where `--alpha`is parameter for edge salience in sharpen method.
 docker run \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/input:/tmp/input \
-    -t slimpy:latest python test.py -v
+    -t slimpy:latest \
+		python test.py -v
 ```
