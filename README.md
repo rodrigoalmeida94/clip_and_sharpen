@@ -27,7 +27,8 @@ docker run -it --rm \
 
 ## Running
 Replace `/Users/rodrigoalmeida/clip_and_sharpen/tmp/output`and `/Users/rodrigoalmeida/clip_and_sharpen/tmp/input` with location of input and output folder.
-*Place input image (`JP2`, `GeoTiff` or other) in `ìnput` folder, this should be the only file in folder.*
+
+**Place input image (`JP2`, `GeoTiff` or other) in `ìnput` folder, this should be the only file in folder.**
 ```
 docker run \
     -v /Users/rodrigoalmeida/clip_and_sharpen/tmp/output:/tmp/output \
