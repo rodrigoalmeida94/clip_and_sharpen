@@ -16,6 +16,8 @@ logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(description='Clip and Sharpen.')
 parser.add_argument('--clip-coords', default=[1000, 1000, 250, 250], type=int, nargs=4,
                     help='Image coordinates to clip with (col_off, row_off, width, height)')
+parser.add_argument('--alpha', default=15, type=int,
+                    help='Parameter for edge salience in sharpen method. Set to 0 to return source imagery.')
 args = parser.parse_args()
 
 def load_input():
@@ -76,11 +78,11 @@ def run_high_pass(input_path, output_path='high_pass.tif'):
     """
 
     with rasterio.open(input_path) as cropped:
-        logging.info('Applying sharpening to %s' % input_path)
+        logging.info('Applying sharpening to %s with alpha %d' % (input_path, args.alpha))
         kwargs = cropped.meta.copy()
         with rasterio.open(output_path, 'w', **kwargs) as out:
             for band in range(1, cropped.count+1):
-                out.write(high_pass_filter(cropped.read(band)), band)
+                out.write(high_pass_filter(cropped.read(band), alpha=args.alpha), band)
     logging.info('Writting sharpened image to %s' % output_path)
     return output_path
 
