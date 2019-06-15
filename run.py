@@ -19,20 +19,24 @@ def load_input():
 
     input_file = os.listdir('/tmp/input')
     if len(input_file) > 1:
-        raise(ValueError, "More than 1 input file.")
+        raise ValueError("More than 1 input file.")
     logging.info('Loading %s' % input_file[0])
     return '/tmp/input/'+input_file[0]
 
-def clip_input(input_path, output_path='cropped.tif'):
+def clip_input(input_path, clip_coords=(1000, 1000, 250, 250), output_path='cropped.tif'):
     """
     Clip a chip of image
     :param str input_path: Path of input full image
+    :param tuple clip_coords: Img coordinates to clip with (col_off, row_off, width, height)
     :param str output_path: Path of output clipped image
     """
 
     with rasterio.open(input_path, 'r') as img:
-        logging.info('Clipping %s' % input_path)
-        window = Window(1000, 1000, 250, 250)
+        logging.info('Clipping %s with coordinates (%d %d %d %d)' % (input_path, *clip_coords))
+        logging.info('%s is h %d by w %d' % (input_path, img.height, img.width))
+        window = Window(*clip_coords)
+        if (window.row_off + window.height) > img.height or (window.col_off + window.width) > img.width:
+            raise ValueError('Clip coordinates are out of image bounds.')
         kwargs = img.meta.copy()
         kwargs.update({
         'driver':'GTiff',
@@ -88,6 +92,7 @@ def write_output(result_path, input_file_name):
     :param str result_path: Path of input image
     :param str input_file_name: File name of original image
     """
+
     output_file_name = "sharpened_"+os.path.splitext(os.path.basename(input_file_name))[0]+".tif"
     logging.info('Copying sharpened image to %s' % "/tmp/output/"+output_file_name)
     shutil.copy(result_path, "/tmp/output/"+output_file_name)
